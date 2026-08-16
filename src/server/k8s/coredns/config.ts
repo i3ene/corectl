@@ -1,8 +1,8 @@
 import { IConfig } from '../../../shared/coredns/config';
-import { ACorefile } from './corefile';
+import { Corefile } from './corefile';
 
-export class Config extends ACorefile implements IConfig {
-  public override toCorefile(): string {
+export class Config extends Corefile implements IConfig {
+  public override toString(): string {
     // TODO
     return '';
   }
