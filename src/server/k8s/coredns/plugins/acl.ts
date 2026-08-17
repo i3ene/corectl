@@ -26,12 +26,10 @@ export class ACLPlugin extends Plugin<ACL> implements IACLPlugin {
 
     if (!config) return plugin;
 
-    // If full plugin declaration provided like: "acl { ... }" - extract inner
     let inner = config.trim();
     const m = /^acl\s*\{([\s\S]*)\}$/.exec(inner);
     if (m) inner = m[1];
 
-    // Remove comments and normalize lines
     const lines = inner
       .replace(/\r\n?/g, '\n')
       .split('\n')

@@ -54,11 +54,13 @@ export class Zone extends Corefile implements IZone {
         i++;
         continue;
       }
+      const nameStart = i;
       const m = /^([a-zA-Z0-9_-]+)/.exec(inner.slice(i));
       if (!m) break;
       const pluginName = m[1];
       i += m[0].length;
-      while (i < inner.length && /\s/.test(inner[i])) i++;
+      // Only skip spaces and tabs here so we don't cross line boundaries.
+      while (i < inner.length && /[ \t]/.test(inner[i])) i++;
       if (inner[i] === '{') {
         let d = 0;
         let e = -1;
@@ -73,7 +75,7 @@ export class Zone extends Corefile implements IZone {
           }
         }
         if (e === -1) break;
-        const blockStart = i - pluginName.length;
+        const blockStart = nameStart;
         const block = inner.slice(blockStart, e + 1).trim();
         const parsed = Plugin.parsePlugin(block);
         if (parsed) zone.plugins.push(parsed);

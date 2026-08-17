@@ -27,7 +27,6 @@ export class ForwardPlugin extends Plugin<Forward> implements IForwardPlugin {
 
     let decl = config.trim();
 
-    // If block form: extract inner
     const blockMatch = /^forward\s*([^\{\n]*)\{([\s\S]*)\}$/.exec(decl);
     if (blockMatch) {
       const argsPart = blockMatch[1].trim();
@@ -44,7 +43,6 @@ export class ForwardPlugin extends Plugin<Forward> implements IForwardPlugin {
       return plugin;
     }
 
-    // Inline form: "forward . 8.8.8.8 1.1.1.1"
     const inlineMatch = /^forward\s+([\s\S]+)$/.exec(decl);
     if (inlineMatch) {
       const rest = inlineMatch[1].trim();

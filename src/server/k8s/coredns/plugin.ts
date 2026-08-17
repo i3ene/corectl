@@ -1,26 +1,6 @@
 import { IPlugin } from '../../../shared/coredns/plugin';
 import { Corefile } from './corefile';
 
-export abstract class Plugin<T> extends Corefile implements IPlugin {
-  public abstract readonly name: string;
-  public abstract config: T;
-
-  public static parsePlugin(declaration: string): Plugin<unknown> | undefined {
-    if (!declaration) return undefined;
-    const s = declaration.trim();
-    const nameMatch = /^([a-zA-Z0-9_-]+)/.exec(s);
-    if (!nameMatch) return undefined;
-    const name = nameMatch[1];
-    try {
-      const parser = Registry.get(name);
-      if (!parser) return undefined;
-      return parser(s);
-    } catch (err) {
-      return undefined;
-    }
-  }
-}
-
 export type PluginParser = (declaration: string) => Plugin<unknown> | undefined;
 
 class PluginRegistry {
@@ -43,4 +23,24 @@ class PluginRegistry {
   }
 }
 
-export const Registry = new PluginRegistry();
+export abstract class Plugin<T> extends Corefile implements IPlugin {
+  public abstract readonly name: string;
+  public abstract config: T;
+
+  public static Registry = new PluginRegistry();
+
+  public static parsePlugin(declaration: string): Plugin<unknown> | undefined {
+    if (!declaration) return undefined;
+    const s = declaration.trim();
+    const nameMatch = /^([a-zA-Z0-9_-]+)/.exec(s);
+    if (!nameMatch) return undefined;
+    const name = nameMatch[1];
+    try {
+      const parser = Plugin.Registry.get(name);
+      if (!parser) return undefined;
+      return parser(s);
+    } catch (err) {
+      return undefined;
+    }
+  }
+}

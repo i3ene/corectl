@@ -9,7 +9,7 @@ export function ParseCorefile<T>() {
           const result = constructor.parseCorefile(declaration);
           return result instanceof module.Plugin ? result : undefined;
         };
-        module.Registry.register(instance.name, parser);
+        module.Plugin.Registry.register(instance.name, parser);
       }
     });
     return constructor;
