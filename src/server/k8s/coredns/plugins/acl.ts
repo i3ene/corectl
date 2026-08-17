@@ -1,6 +1,6 @@
 import { ACLAction, IACL, IACLPlugin, IACLRule } from '../../../../shared/coredns/plugins/acl';
 import { ParseCorefile } from '../corefile';
-import { Plugin, registerPlugin } from '../plugin';
+import { Plugin } from '../plugin';
 
 export class ACLRule implements IACLRule {
   public action: ACLAction = ACLAction.Allow;
@@ -54,5 +54,3 @@ export class ACLPlugin extends Plugin<ACL> implements IACLPlugin {
     return plugin;
   }
 }
-
-registerPlugin('acl', ACLPlugin.parseCorefile);

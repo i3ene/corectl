@@ -1,6 +1,6 @@
 import { IForward, IForwardPlugin } from '../../../../shared/coredns/plugins/forward';
 import { ParseCorefile } from '../corefile';
-import { Plugin, registerPlugin } from '../plugin';
+import { Plugin } from '../plugin';
 
 export class Forward implements IForward {
   public upstreams: string[] = [];
@@ -54,5 +54,3 @@ export class ForwardPlugin extends Plugin<Forward> implements IForwardPlugin {
     return plugin;
   }
 }
-
-registerPlugin('forward', ForwardPlugin.parseCorefile);
