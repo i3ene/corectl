@@ -12,7 +12,7 @@ export abstract class Plugin<T> extends Corefile implements IPlugin {
     if (!nameMatch) return undefined;
     const name = nameMatch[1];
     try {
-      const parser = getParser(name);
+      const parser = Registry.get(name);
       if (!parser) return undefined;
       return parser(s);
     } catch (err) {
@@ -23,16 +23,24 @@ export abstract class Plugin<T> extends Corefile implements IPlugin {
 
 export type PluginParser = (declaration: string) => Plugin<unknown> | undefined;
 
-const parsers: Map<string, PluginParser> = new Map();
+class PluginRegistry {
+  private parsers: Map<string, PluginParser> = new Map();
 
-export function registerPlugin(name: string, parser: PluginParser) {
-  parsers.set(name, parser);
+  public register(name: string, parser: PluginParser) {
+    this.parsers.set(name, parser);
+  }
+
+  public get(name: string): PluginParser | undefined {
+    return this.parsers.get(name);
+  }
+
+  public list(): string[] {
+    return Array.from(this.parsers.keys());
+  }
+
+  public clear() {
+    this.parsers.clear();
+  }
 }
 
-export function getParser(name: string): PluginParser | undefined {
-  return parsers.get(name);
-}
-
-export function listRegisteredPlugins(): string[] {
-  return Array.from(parsers.keys());
-}
+export const Registry = new PluginRegistry();
