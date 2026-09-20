@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getZones } from './controller';
+import { getCorefile } from './controller';
 
 export const router = Router();
 
-router.get('/zone', getZones);
+router.get('/corefile', getCorefile);

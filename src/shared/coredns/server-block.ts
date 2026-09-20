@@ -1,6 +1,6 @@
 import { IPlugin } from './plugin';
 
-export interface IZone {
+export interface IServerBlock {
   name: string;
   plugins: IPlugin[];
 }

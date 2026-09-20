@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { k8sApi } from './connection';
-import { Config } from './coredns/config';
+import { Corefile } from './coredns/corefile';
 
-export async function getZones(req: Request, res: Response): Promise<void> {
+export async function getCorefile(req: Request, res: Response): Promise<void> {
   const configMap = await k8sApi.readNamespacedConfigMap({
     name: 'coredns',
     namespace: 'kube-system',
@@ -12,6 +12,6 @@ export async function getZones(req: Request, res: Response): Promise<void> {
     throw new Error('CoreDNS Corefile not found in kube-system/coredns');
   }
   console.log(corefile);
-  const cfg = Config.parse(corefile);
-  res.status(200).json(cfg);
+  const parsed = Corefile.parse(corefile);
+  res.status(200).json(parsed);
 }

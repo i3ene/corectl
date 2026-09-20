@@ -1,5 +1,5 @@
 import { IPlugin } from '../../../shared/coredns/plugin';
-import { Corefile } from './corefile';
+import { Config } from './config';
 
 export const PluginRegistry = new Map<string, ParsablePlugin>();
 export type ParsablePlugin<T extends Plugin<unknown> = Plugin<unknown>> = {
@@ -7,7 +7,7 @@ export type ParsablePlugin<T extends Plugin<unknown> = Plugin<unknown>> = {
   parse(input: string): T;
 };
 
-export abstract class Plugin<T> extends Corefile implements IPlugin {
+export abstract class Plugin<T> extends Config implements IPlugin {
   public abstract readonly name: string;
   public abstract config: T;
 

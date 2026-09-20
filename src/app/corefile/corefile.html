@@ -1,0 +1,49 @@
+<div hlmTableContainer>
+  <table hlmTable>
+    <caption hlmTableCaption>
+      Corefile
+    </caption>
+    <thead hlmTableHeader>
+      <tr hlmTableRow>
+        <th hlmTableHead>Server Block</th>
+        <th hlmTableHead>Plugins</th>
+      </tr>
+    </thead>
+    <tbody hlmTableBody>
+      @for (serverBlock of serverBlocks | async; track serverBlock) {
+        <tr hlmTableRow>
+          <td hlmTableCell>{{ serverBlock.name }}</td>
+          <td hlmTableCell>{{ serverBlock.plugins.length }}</td>
+        </tr>
+      }
+    </tbody>
+    <tfoot hlmTableFooter>
+      <tr hlmTableRow>
+        <td hlmTableCell [attr.colSpan]="2">
+          <nav hlmPagination>
+            <ul hlmPaginationContent>
+              <li hlmPaginationItem>
+                <hlm-pagination-previous link="/components/menubar" />
+              </li>
+              <li hlmPaginationItem>
+                <a hlmPaginationLink link="#">1</a>
+              </li>
+              <li hlmPaginationItem>
+                <a hlmPaginationLink link="#" isActive>2</a>
+              </li>
+              <li hlmPaginationItem>
+                <a hlmPaginationLink link="#">3</a>
+              </li>
+              <li hlmPaginationItem>
+                <hlm-pagination-ellipsis />
+              </li>
+              <li hlmPaginationItem>
+                <hlm-pagination-next link="/components/popover" />
+              </li>
+            </ul>
+          </nav>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

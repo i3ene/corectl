@@ -1,8 +1,8 @@
-import { IZone } from '../../../shared/coredns/zone';
-import { Corefile } from './corefile';
+import { IServerBlock } from '../../../shared/coredns/server-block';
+import { Config } from './config';
 import { Plugin } from './plugin';
 
-export class Zone extends Corefile implements IZone {
+export class ServerBlock extends Config implements IServerBlock {
   public name: string = '';
   public plugins: Plugin<unknown>[] = [];
 
@@ -14,8 +14,8 @@ export class Zone extends Corefile implements IZone {
     return `${this.name} {\n${plugins}\n}`.trim();
   }
 
-  public static parse(config: string): Zone {
-    const zone = new Zone();
+  public static parse(config: string): ServerBlock {
+    const zone = new ServerBlock();
     if (!config) return zone;
     const cleaned = config
       .replace(/\r\n?/g, '\n')
