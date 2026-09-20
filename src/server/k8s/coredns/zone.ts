@@ -60,10 +60,16 @@ export class Zone extends Corefile implements IZone {
       i += m[0].length;
       // Only skip spaces and tabs here so we don't cross line boundaries.
       while (i < inner.length && /[ \t]/.test(inner[i])) i++;
-      if (inner[i] === '{') {
+      const remainder = inner.slice(i);
+      const nextNewline = remainder.search(/\n/);
+      const nextBrace = remainder.indexOf('{');
+      const hasBlock =
+        inner[i] === '{' || (nextBrace !== -1 && (nextNewline === -1 || nextBrace < nextNewline));
+      if (hasBlock) {
+        const braceIndex = inner[i] === '{' ? i : i + nextBrace;
         let d = 0;
         let e = -1;
-        for (let j = i; j < inner.length; j++) {
+        for (let j = braceIndex; j < inner.length; j++) {
           if (inner[j] === '{') d++;
           else if (inner[j] === '}') {
             d--;

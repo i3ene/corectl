@@ -1,7 +1,7 @@
 import { IPlugin } from '../plugin';
 
 export interface IHealth {
-  address: string;
+  address?: string;
   duration?: string;
 }
 
