@@ -1,11 +1,9 @@
-import { ParseCorefile } from '../corefile';
 import { Plugin } from '../plugin';
 
 export class ReadyConfig {
   public path: string = '/ready';
 }
 
-@ParseCorefile()
 export class ReadyPlugin extends Plugin<ReadyConfig> {
   public readonly name = 'ready';
   public config: ReadyConfig = new ReadyConfig();
@@ -14,7 +12,7 @@ export class ReadyPlugin extends Plugin<ReadyConfig> {
     return `${this.name} ${this.config.path}`.trim();
   }
 
-  public static parseCorefile(config: string): ReadyPlugin {
+  public static parse(config: string): ReadyPlugin {
     const p = new ReadyPlugin();
     if (!config) return p;
     const decl = config.trim();

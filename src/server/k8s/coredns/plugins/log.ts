@@ -1,4 +1,3 @@
-import { ParseCorefile } from '../corefile';
 import { Plugin } from '../plugin';
 
 export class LogConfig {
@@ -6,7 +5,6 @@ export class LogConfig {
   public options: string[] = [];
 }
 
-@ParseCorefile()
 export class LogPlugin extends Plugin<LogConfig> {
   public readonly name = 'log';
   public config: LogConfig = new LogConfig();
@@ -16,7 +14,7 @@ export class LogPlugin extends Plugin<LogConfig> {
     return args ? `${this.name} ${args}` : this.name;
   }
 
-  public static parseCorefile(config: string): LogPlugin {
+  public static parse(config: string): LogPlugin {
     const p = new LogPlugin();
     if (!config) return p;
     let decl = config.trim();

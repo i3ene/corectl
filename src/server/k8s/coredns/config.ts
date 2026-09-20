@@ -1,8 +1,8 @@
 import { IConfig } from '../../../shared/coredns/config';
-import { Corefile, ParseCorefile } from './corefile';
+import { Corefile, CorePlugin } from './corefile';
 import { Zone } from './zone';
 
-@ParseCorefile()
+@CorePlugin()
 export class Config extends Corefile implements IConfig {
   public zones: Zone[] = [];
 

@@ -1,5 +1,4 @@
 import { ACLAction, IACL, IACLPlugin, IACLRule } from '../../../../shared/coredns/plugins/acl';
-import { ParseCorefile } from '../corefile';
 import { Plugin } from '../plugin';
 
 export class ACLRule implements IACLRule {
@@ -11,7 +10,6 @@ export class ACL implements IACL {
   public rules: ACLRule[] = [];
 }
 
-@ParseCorefile()
 export class ACLPlugin extends Plugin<ACL> implements IACLPlugin {
   public readonly name = 'acl';
   public config: ACL = new ACL();
@@ -21,7 +19,7 @@ export class ACLPlugin extends Plugin<ACL> implements IACLPlugin {
     return `${this.name} {\n${lines.join('\n')}\n}`;
   }
 
-  public static parseCorefile(config: string): ACLPlugin {
+  public static parse(config: string): ACLPlugin {
     const plugin = new ACLPlugin();
 
     if (!config) return plugin;

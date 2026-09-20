@@ -1,8 +1,8 @@
 import { IZone } from '../../../shared/coredns/zone';
-import { Corefile, ParseCorefile } from './corefile';
+import { Corefile, CorePlugin } from './corefile';
 import { Plugin } from './plugin';
 
-@ParseCorefile()
+@CorePlugin()
 export class Zone extends Corefile implements IZone {
   public name: string = '';
   public plugins: Plugin<unknown>[] = [];

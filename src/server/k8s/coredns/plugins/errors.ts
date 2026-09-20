@@ -1,4 +1,3 @@
-import { ParseCorefile } from '../corefile';
 import { Plugin } from '../plugin';
 
 export class ErrorsConfig {
@@ -6,7 +5,6 @@ export class ErrorsConfig {
   public format: string = 'short';
 }
 
-@ParseCorefile()
 export class ErrorsPlugin extends Plugin<ErrorsConfig> {
   public readonly name = 'errors';
   public config: ErrorsConfig = new ErrorsConfig();
@@ -18,7 +16,7 @@ export class ErrorsPlugin extends Plugin<ErrorsConfig> {
     return opts.length ? `${this.name} ${opts.join(' ')}` : this.name;
   }
 
-  public static parseCorefile(config: string): ErrorsPlugin {
+  public static parse(config: string): ErrorsPlugin {
     const p = new ErrorsPlugin();
     if (!config) return p;
     let decl = config.trim();

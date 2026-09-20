@@ -1,9 +1,18 @@
-import './acl';
-import './errors';
-import './forward';
-import './health';
-import './log';
-import './ready';
+import { ParsablePlugin } from '../plugin';
+import { ACLPlugin } from './acl';
+import { ErrorsPlugin } from './errors';
+import { ForwardPlugin } from './forward';
+import { HealthPlugin } from './health';
+import { LogPlugin } from './log';
+import { ReadyPlugin } from './ready';
 
-export { };
+const plugins: ParsablePlugin[] = [
+  ACLPlugin,
+  ErrorsPlugin,
+  HealthPlugin,
+  ReadyPlugin,
+  ForwardPlugin,
+  LogPlugin,
+];
 
+export default plugins;

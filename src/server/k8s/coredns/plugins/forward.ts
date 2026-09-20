@@ -1,5 +1,4 @@
 import { IForward, IForwardPlugin } from '../../../../shared/coredns/plugins/forward';
-import { ParseCorefile } from '../corefile';
 import { Plugin } from '../plugin';
 
 export class Forward implements IForward {
@@ -7,7 +6,6 @@ export class Forward implements IForward {
   public options: string[] = [];
 }
 
-@ParseCorefile()
 export class ForwardPlugin extends Plugin<Forward> implements IForwardPlugin {
   public readonly name = 'forward';
   public config: Forward = new Forward();
@@ -21,7 +19,7 @@ export class ForwardPlugin extends Plugin<Forward> implements IForwardPlugin {
     return `${this.name} ${args}`;
   }
 
-  public static parseCorefile(config: string): ForwardPlugin {
+  public static parse(config: string): ForwardPlugin {
     const plugin = new ForwardPlugin();
     if (!config) return plugin;
 

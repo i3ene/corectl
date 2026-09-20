@@ -1,11 +1,9 @@
-import { ParseCorefile } from '../corefile';
 import { Plugin } from '../plugin';
 
 export class HealthConfig {
   public path: string = '/health';
 }
 
-@ParseCorefile()
 export class HealthPlugin extends Plugin<HealthConfig> {
   public readonly name = 'health';
   public config: HealthConfig = new HealthConfig();
@@ -14,7 +12,7 @@ export class HealthPlugin extends Plugin<HealthConfig> {
     return `${this.name} ${this.config.path}`.trim();
   }
 
-  public static parseCorefile(config: string): HealthPlugin {
+  public static parse(config: string): HealthPlugin {
     const p = new HealthPlugin();
     if (!config) return p;
     const decl = config.trim();
