@@ -1,8 +1,7 @@
 import { IZone } from '../../../shared/coredns/zone';
-import { Corefile, CorePlugin } from './corefile';
+import { Corefile } from './corefile';
 import { Plugin } from './plugin';
 
-@CorePlugin()
 export class Zone extends Corefile implements IZone {
   public name: string = '';
   public plugins: Plugin<unknown>[] = [];
@@ -15,7 +14,7 @@ export class Zone extends Corefile implements IZone {
     return `${this.name} {\n${plugins}\n}`.trim();
   }
 
-  public static parseCorefile(config: string): Zone {
+  public static parse(config: string): Zone {
     const zone = new Zone();
     if (!config) return zone;
     const cleaned = config
@@ -77,7 +76,7 @@ export class Zone extends Corefile implements IZone {
         if (e === -1) break;
         const blockStart = nameStart;
         const block = inner.slice(blockStart, e + 1).trim();
-        const parsed = Plugin.parsePlugin(block);
+        const parsed = Plugin.parse(block);
         if (parsed) zone.plugins.push(parsed);
         i = e + 1;
       } else {
@@ -85,7 +84,7 @@ export class Zone extends Corefile implements IZone {
         const nl = rest.search(/\n/);
         const line = nl === -1 ? rest.trim() : rest.slice(0, nl).trim();
         const decl = `${pluginName} ${line}`.trim();
-        const parsed = Plugin.parsePlugin(decl);
+        const parsed = Plugin.parse(decl);
         if (parsed) zone.plugins.push(parsed);
         i += (nl === -1 ? rest.length : nl) + 1;
       }

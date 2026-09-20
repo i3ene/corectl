@@ -1,8 +1,7 @@
 import { IConfig } from '../../../shared/coredns/config';
-import { Corefile, CorePlugin } from './corefile';
+import { Corefile } from './corefile';
 import { Zone } from './zone';
 
-@CorePlugin()
 export class Config extends Corefile implements IConfig {
   public zones: Zone[] = [];
 
@@ -13,7 +12,7 @@ export class Config extends Corefile implements IConfig {
       .join('\n\n');
   }
 
-  public static parseCorefile(config: string): Config {
+  public static parse(config: string): Config {
     const c = new Config();
     if (!config) return c;
     const s = config.replace(/\r\n?/g, '\n');
@@ -42,17 +41,17 @@ export class Config extends Corefile implements IConfig {
         }
         if (end === -1) {
           const chunk = s.slice(start).trim();
-          c.zones.push(Zone.parseCorefile(chunk));
+          c.zones.push(Zone.parse(chunk));
           break;
         }
         const chunk = s.slice(start, end + 1).trim();
-        c.zones.push(Zone.parseCorefile(chunk));
+        c.zones.push(Zone.parse(chunk));
         i = end + 1;
       } else {
         const nl = s.indexOf('\n', i);
         const end = nl === -1 ? len : nl;
         const chunk = s.slice(start, end).trim();
-        c.zones.push(Zone.parseCorefile(chunk));
+        c.zones.push(Zone.parse(chunk));
         i = end + 1;
       }
     }

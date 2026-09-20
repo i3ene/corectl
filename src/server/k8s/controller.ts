@@ -11,6 +11,6 @@ export async function getZones(req: Request, res: Response): Promise<void> {
   if (!corefile) {
     throw new Error('CoreDNS Corefile not found in kube-system/coredns');
   }
-  const cfg = Config.parseCorefile(corefile);
+  const cfg = Config.parse(corefile);
   res.status(200).json(cfg);
 }

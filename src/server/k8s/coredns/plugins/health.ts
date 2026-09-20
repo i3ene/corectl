@@ -1,23 +1,22 @@
+import { IHealth, IHealthPlugin } from '../../../../shared/coredns/plugins/health';
 import { Plugin } from '../plugin';
 
-export class HealthConfig {
-  public path: string = '/health';
+export class Health implements IHealth {
+  public address: string = ':8080';
+  public duration?: string | undefined = undefined;
 }
 
-export class HealthPlugin extends Plugin<HealthConfig> {
+export class HealthPlugin extends Plugin<Health> implements IHealthPlugin {
   public readonly name = 'health';
-  public config: HealthConfig = new HealthConfig();
+  public config: Health = new Health();
 
   public override toString(): string {
-    return `${this.name} ${this.config.path}`.trim();
+    // TODO
+    return '';
   }
 
-  public static parse(config: string): HealthPlugin {
-    const p = new HealthPlugin();
-    if (!config) return p;
-    const decl = config.trim();
-    const m = /^health\s*([\S]*)/.exec(decl);
-    if (m && m[1]) p.config.path = m[1];
-    return p;
+  public static override parse(config: string): HealthPlugin {
+    // TODO
+    return new HealthPlugin();
   }
 }

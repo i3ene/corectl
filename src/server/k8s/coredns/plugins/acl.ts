@@ -19,7 +19,7 @@ export class ACLPlugin extends Plugin<ACL> implements IACLPlugin {
     return `${this.name} {\n${lines.join('\n')}\n}`;
   }
 
-  public static parse(config: string): ACLPlugin {
+  public static override parse(config: string): ACLPlugin {
     const plugin = new ACLPlugin();
 
     if (!config) return plugin;

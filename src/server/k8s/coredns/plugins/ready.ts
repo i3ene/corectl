@@ -1,23 +1,22 @@
+import { IReady, IReadyPlugin, ReadyMonitor } from '../../../../shared/coredns/plugins/ready';
 import { Plugin } from '../plugin';
 
-export class ReadyConfig {
-  public path: string = '/ready';
+export class Ready implements IReady {
+  public address?: string | undefined = undefined;
+  public monitor?: ReadyMonitor | undefined = undefined;
 }
 
-export class ReadyPlugin extends Plugin<ReadyConfig> {
+export class ReadyPlugin extends Plugin<Ready> implements IReadyPlugin {
   public readonly name = 'ready';
-  public config: ReadyConfig = new ReadyConfig();
+  public config: Ready = new Ready();
 
   public override toString(): string {
-    return `${this.name} ${this.config.path}`.trim();
+    // TODO
+    return '';
   }
 
-  public static parse(config: string): ReadyPlugin {
-    const p = new ReadyPlugin();
-    if (!config) return p;
-    const decl = config.trim();
-    const m = /^ready\s*([^\s{]+)?/.exec(decl);
-    if (m && m[1]) p.config.path = m[1];
-    return p;
+  public static override parse(config: string): ReadyPlugin {
+    // TODO
+    return new ReadyPlugin();
   }
 }

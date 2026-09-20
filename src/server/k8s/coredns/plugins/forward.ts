@@ -19,7 +19,7 @@ export class ForwardPlugin extends Plugin<Forward> implements IForwardPlugin {
     return `${this.name} ${args}`;
   }
 
-  public static parse(config: string): ForwardPlugin {
+  public static override parse(config: string): ForwardPlugin {
     const plugin = new ForwardPlugin();
     if (!config) return plugin;
 
