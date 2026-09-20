@@ -1,7 +1,9 @@
 import { IPlugin } from '../plugin';
 
 export interface ILog {
-  // TODO
+  names: string[];
+  format?: string;
+  classes: string[];
 }
 
 export interface ILogPlugin extends IPlugin {
